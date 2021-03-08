@@ -1,6 +1,15 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ./WalletManager.csproj ./
+RUN dotnet restore
 
-WORKDIR /app
 COPY . .
-#EXPOSE 5000
-ENTRYPOINT [ "dotnet", "watch", "run", "--urls", "https://0.0.0.0:5001"]
+RUN dotnet build -p:Configuration=Release -p:Platform="Any CPU"  -o /app
+
+FROM build AS publish
+RUN dotnet publish -p:Configuration=Release -p:Platform="Any CPU" -o /app
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT [ "dotnet", "WalletManager.dll"]
