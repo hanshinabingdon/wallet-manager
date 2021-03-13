@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  wm-api-service:
+    build:
+      context: ../../wallet-manager
+      dockerfile: ./build/Dockerfile
+    expose:
+      - 5000
+    
+  wm-nginx-service:
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+    ports:
+    - 80:80
+      
