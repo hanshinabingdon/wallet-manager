@@ -3,7 +3,7 @@ services:
   wm-api-service:
     build:
       context: ../../wallet-manager
-      dockerfile: ./build/Dockerfile
+      dockerfile: ./build/api/Dockerfile
     expose:
       - 5000
     
@@ -13,4 +13,10 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 80:80
+  
+  wm-mysql-service:
+    build:
+      context: ./mysql
+      dockerfile: ./Dockerfile
+
       
