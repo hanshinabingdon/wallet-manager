@@ -1,7 +1,14 @@
 FROM mysql:8.0.23
 
+RUN apt-get update && \
+    apt-get -y install locales-all
+
+ENV LANG="ja_JP.UTF-8"
+
+COPY ./initdb.d/ /docker-entrypoint-initdb.d/
+
 ENV MYSQL_ROOT_PASSWORD="root"
-    MYSQL_DATABASE="wm-db"
-    MYSQL_USER="wm-admin" 
-    MYSQL_PASSWORD="wm-admin-pass"
-    TZ="Asia/Tokyo"
+ENV MYSQL_DATABASE="wallet_manager_db"
+ENV MYSQL_USER="wm-admin" 
+ENV MYSQL_PASSWORD="wm-admin-pass"
+ENV TZ="Asia/Tokyo"
