@@ -13,10 +13,3 @@ services:
       dockerfile: ./build/api/Dockerfile
     expose:
       - 5000
-
-  wm-mysql-service:
-    build:
-      context: ./mysql
-      dockerfile: ./Dockerfile
-    expose:
-      - 3306
